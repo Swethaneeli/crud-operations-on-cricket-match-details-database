@@ -157,7 +157,7 @@ app.get("/matches/:matchId/players", async (request, response) => {
 
 //7) get statistics of a specific player
 
-app.get("/players:/playerId/playerScores/", async (request, response) => {
+app.get("/players/:playerId/playerScores/", async (request, response) => {
   const { playerId } = request.params;
   const playerStatisticsQuery = `
     SELECT 
@@ -174,8 +174,8 @@ app.get("/players:/playerId/playerScores/", async (request, response) => {
         player_match_score.player_id = ${playerId};`;
   const stats = await db.get(playerStatisticsQuery);
   response.send({
-    playerId: stats["player_details.player_id"],
-    playerName: stats["player_details.player_name"],
+    playerId: stats["player_id"],
+    playerName: stats["player_name"],
     totalScore: stats["SUM(score)"],
     totalFours: stats["SUM(fours)"],
     totalSixes: stats["SUM(sixes)"],
